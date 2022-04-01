@@ -52,7 +52,9 @@
 ##### 命令
 
 ```
-ql repo https://github.com/atyvcn/ty_scripts.git "" "Backup|index|HT.*|sendNotify|ql" "HT.*|sendNotify|ql"
+
+
+ql repo https://github.com/atyvcn/ty_scripts.git "" "Backup|index|HT.*|sendNotify|ql" "HT.*|sendNotify|ql|utils|function"
 ```
 
 ```
