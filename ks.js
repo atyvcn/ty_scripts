@@ -34,7 +34,7 @@ hostname = api.kuaisho*.com
 hostname = open.kuaisho*.com
 */
 if( process.env.ksCookie ){
-    process.env.ksCookie=process.env.ksCookie.replaceAll('&', '@');
+    process.env.ksCookie=process.env.ksCookie.replace(/&/g, '@');
 }else{
     console.log("请添加ksCookie");
     return false
