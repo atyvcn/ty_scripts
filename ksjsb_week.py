@@ -37,39 +37,24 @@ def ksjsbFriendAssist(api_st, code):
     url = "https://nebula.kuaishou.com/rest/zt/encourage/assistance/friendAssist"
     payload = "{\"assistanceId\":\"" + code + "\"}"
     if 'did=' in api_st:
-        if '：kpf=' not in api_st:
-            api_st = 'kpf=ANDROID_PHONE; ' + api_st
-        if 'kpn=' not in api_st:
-            api_st = 'kpn=NEBULA; ' + api_st
-
-        headers = {
-            'Host': 'nebula.kuaishou.com',
-            'Origin': 'https://nebula.kuaishou.com',
-            'Content-Type': 'application/json',
-            'Cookie': api_st,
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Connection': 'keep-alive',
-            'Accept': '*/*',
-            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ksNebula/9.9.10.1646 ISLP/0 StatusHT/47 ISDM/0 TitleHT/44 NetType/WIFI ICFO/0 locale/zh-Hans CT/0 Yoda/2.6.8.4 ISLB/0 AZPREFIX/zw BHT/102 WebViewType/WK',
-            'Content-Length': '35',
-            'Referer': 'https://nebula.kuaishou.com/nebula/daily-invite',
-            'Accept-Language': 'zh-cn'
-        }
-    else:
-        headers = {
-          'Host': 'nebula.kuaishou.com',
-          'Origin': 'https://nebula.kuaishou.com',
-          'Content-Type': 'application/json',
-          'Cookie': 'kpn=NEBULA; kpf=ANDROID_PHONE; did=ANDROID_' + generate_random_did(16) + '; ver=9.10; appver=9.10.40.2474; language=zh-cn; countryCode=CN; sys=ANDROID_5.1; client_key=2ac2a76d; ' + api_st,
-          'Accept-Encoding': 'gzip, deflate, br',
-          'Connection': 'keep-alive',
-          'Accept': '*/*',
-          'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ksNebula/9.9.10.1646 ISLP/0 StatusHT/47 ISDM/0 TitleHT/44 NetType/WIFI ICFO/0 locale/zh-Hans CT/0 Yoda/2.6.8.4 ISLB/0 AZPREFIX/zw BHT/102 WebViewType/WK',
-          'Content-Length': '35',
-          'Referer': 'https://nebula.kuaishou.com/nebula/daily-invite',
-          'Accept-Language': 'zh-cn'
-        }
-
+        api_st = 'did=ANDROID_' + generate_random_did(16) + '; '
+    if 'kpf=' not in api_st:
+        api_st = 'kpf=ANDROID_PHONE; ' + api_st
+    if 'kpn=' not in api_st:
+        api_st = 'kpn=NEBULA; ' + api_st
+    headers = {
+        'Host': 'nebula.kuaishou.com',
+        'Origin': 'https://nebula.kuaishou.com',
+        'Content-Type': 'application/json',
+        'Cookie': api_st,
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Connection': 'keep-alive',
+        'Accept': '*/*',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 ksNebula/9.9.10.1646 ISLP/0 StatusHT/47 ISDM/0 TitleHT/44 NetType/WIFI ICFO/0 locale/zh-Hans CT/0 Yoda/2.6.8.4 ISLB/0 AZPREFIX/zw BHT/102 WebViewType/WK',
+        'Content-Length': '35',
+        'Referer': 'https://nebula.kuaishou.com/nebula/daily-invite',
+        'Accept-Language': 'zh-cn'
+    }
     response = requests.request("POST", url, headers=headers, data=payload, verify=False).json()
     print(response)
     print(response.get('msg'))
