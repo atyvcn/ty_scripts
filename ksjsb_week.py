@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # @Time    : 2022/4/27 13:49
-# @Author  : HarbourJ
+# @Author  : HarbourJ,TengYu
 # @TG      : https://t.me/HarbourToulu
 # @File    : ksjsb_week.py
 # @Description: kuaishou_api_sts.txt为你快手极速版ck存放文件，一行一个ck；
-#               code为你的助力码（获取方式-保存二维码-微信二维码转链接机器人🤖-把短链放到浏览器访问转为长链-最后一组数字即为你的助力码）
+#               code为你的助力码（获取方式：快手极速版 ->周周赚金币->分享保存二维码-二维码转链接-把短链放到浏览器访问转为长链-最后一组数字即为你的助力码）
 """
 cron: 20 13 * * *
 new Env('快手极速版-周周赚金币');
@@ -37,6 +37,11 @@ def ksjsbFriendAssist(api_st, code):
     url = "https://nebula.kuaishou.com/rest/zt/encourage/assistance/friendAssist"
     payload = "{\"assistanceId\":\"" + code + "\"}"
     if 'did=' in api_st:
+        if '：kpf=' not in api_st:
+            api_st = 'kpf=ANDROID_PHONE; ' + api_st
+        if 'kpn=' not in api_st:
+            api_st = 'kpn=NEBULA; ' + api_st
+
         headers = {
             'Host': 'nebula.kuaishou.com',
             'Origin': 'https://nebula.kuaishou.com',
@@ -83,6 +88,6 @@ if __name__ == '__main__':
     j = 0
     for api_st in api_stCK:
         j += 1
-        print(j, "-"*100)
+        print(j, "-"*50)
         time.sleep(0.8)
         ksjsbFriendAssist(api_st, code)
