@@ -6,7 +6,10 @@
 # @File    : ksjsb_week.py
 # @Description: kuaishou_api_sts.txt为你快手极速版ck存放文件，一行一个ck；
 #               code为你的助力码（获取方式-保存二维码-微信二维码转链接机器人🤖-把短链放到浏览器访问转为长链-最后一组数字即为你的助力码）
-
+"""
+cron: 20 13 * * *
+new Env('快手极速版-周周赚金币');
+"""
 try:
     import requests
     import time
