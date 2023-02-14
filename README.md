@@ -1,21 +1,6 @@
-
-# [全部脚本使用教程](http://cxgc.top/)
-
 ## 目录介绍
 
-#### aqc 爱企查
-#### daw 都爱玩
-#### htsc 欢太商城
-#### jkd 聚看点
-#### jztt 九章头条
-#### ks 快手极速版
-#### mt 美团
-#### qsk 全球购骑士特权
-#### tzxg 腾讯自选股
-#### xm 小米运动刷步数
-#### zjtd 今日头条极速版
-#### zqkd 中青看点
-
+杂七杂八的脚本，自用
 ## 特别声明:
 
 * 本仓库发布的Script项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断.
@@ -37,11 +22,11 @@
 
 
 ### 为防止账号再次遭到封禁失联,可以加入QQ交流群
-### TY青龙代挂系统 556589489
-点击链接加入群聊【TY青龙代挂系统】：https://jq.qq.com/?_wv=1027&k=C1L8HKQo
+### TY云任务系统 556589489
+点击链接加入群聊【TY云任务系统】：https://jq.qq.com/?_wv=1027&k=C1L8HKQo
 
-### TY青龙代挂 698816178
-点击链接加入群聊【TY青龙代挂】：https://jq.qq.com/?_wv=1027&k=dlgXgRRX
+### TY云任务 698816178
+点击链接加入群聊【TY云任务】：https://jq.qq.com/?_wv=1027&k=dlgXgRRX
 
 # 拉取仓库
 ##### 名称
@@ -54,12 +39,12 @@
 ```
 
 
-ql repo https://github.com/atyvcn/ty_scripts.git "" "Backup|index|HT.*|sendNotify|ql" "HT.*|sendNotify|ql|utils|function"
+ql repo https://github.com/atyvcn/ty_scripts.git "^\w+_" "Backup|activity" "^[a-zA-Z0-9]+-|sendNotify|function|basic"
 ```
 
 ```
 ##### 定时规则
 
 ```
-0 0 1,10,15 * * *
+30 10,23 * * *
 ```
