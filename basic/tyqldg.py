@@ -28,11 +28,7 @@ except Exception as e:  # 异常捕捉
     sys.exit(1)  # 退出脚本
 os.environ['no_proxy'] = '*'  # 禁用代理
 requests.packages.urllib3.disable_warnings()  # 抑制错误
-try:  # 异常捕捉
-    from notify import send  # 导入青龙消息通知模块
-except Exception as err:  # 异常捕捉
-    logger.debug(str(err))  # 调试日志输出
-    logger.info("无推送文件")  # 标准日志输出
+
 
 
 def notify_send(title,env_name,name,message):
@@ -50,28 +46,6 @@ def notify_send(title,env_name,name,message):
             if data["code"]==200:
                 logger.info(data["msg"])
             return True
-
-def ql_send(title,text):
-    if "TYQLDG_SEND" in os.environ and os.environ["TYQLDG_SEND"] == 'disable':
-        return True
-    else:
-        try:  # 异常捕捉
-            send(title, text)  # 消息发送
-        except Exception as err:  # 异常捕捉
-            logger.debug(str(err))  # Debug日志输出
-            logger.info("通知发送失败")  # 标准日志输出
-
-
-
-
-def serch_ck(userName):  # 方法 搜索 userName
-    for i in range(len(ckData)):  # For循环 变量[ckData]的数量
-        row=ckData[i]
-        #if "userName" not in row: continue # userName未定义就跳过
-        if userName==row['userName']:  # 判断envlist取值['value']
-            return True, row  # 返回 -> True[Bool], Array
-    return False, row
-
 
 def post_cookie(data):  # 方法 读取变量
     try:  # 异常捕捉
