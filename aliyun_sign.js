@@ -2,7 +2,6 @@
 cron "15 9,22 * * *" aliyun_sign.js, tag=阿里云盘签到
 by、梦创星河
 */
-$
 
 const Env=require('./basic/Env'),
 {mt_rand,TYQLDG_API,CkToObj,ObjToCK,}=require('./basic/tyqldg'),
