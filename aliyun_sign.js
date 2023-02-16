@@ -94,7 +94,8 @@ if (process.env[env_name]) {
         }
         sendMessage.push('签到成功')
         const { signInLogs, signInCount } = SigninData.result
-        const signedArray = signInLogs.filter(v => v.status === 'normal') // 已签到信息组
+        //if l['status'] != 'miss':  v.status === 'normal'
+        const signedArray = signInLogs.filter(v => v.status != 'miss') // 已签到信息组
         const currentSignInfo = signedArray[signedArray.length - 1] // 当天签到信息
         sendMessage.push(`本月累计签到 ${signInCount} 天`)
         //   当天签到是否有奖励
