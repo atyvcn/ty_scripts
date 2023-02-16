@@ -1,5 +1,5 @@
 /*
-cron "15 9,22 * * *" aliyun_sign.js, tag=阿里云盘签到
+cron "15 13 * * *" aliyun_sign.js, tag=阿里云盘签到
 by、梦创星河
 */
 

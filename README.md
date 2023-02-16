@@ -1,6 +1,5 @@
 ## 目录介绍
-
-杂七杂八的脚本，TY云任务自用
+自用拉库，TY云任务系统专用
 ## 特别声明:
 
 * 本仓库发布的Script项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断.
@@ -29,22 +28,15 @@
 点击链接加入群聊【TY云任务】：https://jq.qq.com/?_wv=1027&k=dlgXgRRX
 
 # 拉取仓库
-##### 名称
-
+##### 拉库命令
 ```
-【atyvcn-非京东任务汇总】
-```
-##### 命令
-
-```
-
-
 ql repo https://github.com/atyvcn/ty_scripts.git "^\w+_" "Backup|activity" "^[a-zA-Z0-9]+-|sendNotify|function|basic"
 ```
-
+##### 加代理拉库命令
+```
+ql repo https://github.wwml.ml/https://github.com/atyvcn/ty_scripts.git "^\w+_" "Backup|activity" "^[a-zA-Z0-9]+-|sendNotify|function|basic"
 ```
 ##### 定时规则
-
 ```
-30 10,23 * * *
+30 11,23 * * *
 ```
