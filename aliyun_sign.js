@@ -4,7 +4,7 @@ by、梦创星河
 */
 
 const Env=require('./basic/Env'),
-{mt_rand,TYQLDG_API,CkToObj,ObjToCK,}=require('./basic/tyqldg'),
+{mt_rand,TYQLDG_API,CkToJson,JsonToCK,}=require('./basic/tyqldg'),
 $ = new Env('阿里云盘签到')
 env_name="ALYP_CK";
 let eid=0,cookiesArr=[],cookie='';
@@ -22,7 +22,7 @@ if (process.env[env_name]) {
     }
     const messages = []
     for (let i = 0,e; i < CL; i++) {
-        e=CkToObj(cookiesArr[i]);
+        e=CkToJson(cookiesArr[i]);
         $.UserName=e.user_id;
         $.index=i+1;
         const queryBody = JSON.stringify({
@@ -45,7 +45,7 @@ if (process.env[env_name]) {
             else errorMessage.push(message)
             console.log(errorMessage.join(', '))
 
-            let json={"userName":$.UserName,"title":`${$.name}cookie已失效 - ${$.UserName}`,"message":`阿里网盘账号${$.index} ${$.UserName}\n请重新登录获取cookie`,"disable":true};
+            let json={"userName":$.UserName,"title":`${$.name}账号cookie已失效`,"message":`${$.name}账号${$.index} ${$.UserName}\n请重新登录获取cookie`,"disable":true};
             if(eid) json.eid=eid;else json.env_name=env_name;
             let NotifyData = await TYQLDG_API("notify",json);
             if(NotifyData){
@@ -59,7 +59,7 @@ if (process.env[env_name]) {
 
         if( refresh_token ){
             e.refresh_token=refresh_token;
-            let json={"ac":"update","check":false,"rectify":false,"value":ObjToCK(e),"userName":user_id,"nickName":nick_name};
+            let json={"ac":"update","check":false,"rectify":false,"value":JsonToCK(e),"userName":user_id,"nickName":nick_name};
             if(eid) json.eid=eid;else json.env_name=env_name;
             CookieData = await TYQLDG_API("cookie",json);
             if(CookieData){
