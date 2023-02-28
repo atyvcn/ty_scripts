@@ -374,9 +374,12 @@ class _0x5d3aa8 extends _0x4e0854 {
             let {
                 result: _0x248230
             } = await this.request(_0x586f4d);
-            _0x248230?.["mobile"] ? this.name = _0x248230.mobile : this.log("获取账号失败");
-
-            if(!_0x248230?.["mobile"]){
+            if(_0x248230?.["mobile"]){
+                let tel=_0x248230.mobile;
+                tel = tel.substr(0,3) + "****" + tel.substr(7);
+                this.name=_0x248230.username?_0x248230.username:tel;
+            }else{
+                this.log("获取账号失败");
                 await expireNotify(this.UTUSER,this.index);
             }
 
