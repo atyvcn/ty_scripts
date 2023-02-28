@@ -261,7 +261,7 @@ class UserClass extends BasicClass {
     for(let user of $.userList) {
         await user.userTask();
     }
-    
+
     //封装的并发方法, 想试的把下面的//删掉
     //await $.threadTask('userTask',MAX_THREAD);
     
