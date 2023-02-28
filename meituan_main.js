@@ -10,9 +10,11 @@ userId可以删掉不填
 
 变量:
 MT_CK: 必填，账号cookie，多账号换行或者@或者&隔开，格式: userId=12345678&token=ccccccccccccccccc
-meituanNotify：可选，推送开关，填0为不推送，填1或其他推送。默认为1
+meituanNotify：可选，推送开关，填0为不推送，填1或其他推送。默认为0
 meituanDrawKeyword：可选，抽奖的关键词，留空的话就不抽奖。默认为空
 meituanPosition： 可选，虚拟定位坐标，注意长度，格式: 113233330,23166670 (如113.233330,23.166670需要转换为113233330,23166670，即保留6位小数点)
+
+cron: 26 0,7-21/2 * * *
 
 重写：(打开美团APP)
 [task_local]
@@ -34,7 +36,7 @@ eid=0,
     _0x7c8055 = "1140" + $.randomString(5, "0123456789") + ",225" + $.randomString(5, "0123456789");
 const _0x44f917 = "\"i2HKpOmsirDPavelVfQBZN8/5kOBesUP9GCPlVqsCpwKlBfnt3lxxF9P4M4rZ5z77Q7v55DJz2I0qyKMRTk8FPBz+TY6oJ+N1ZYZJe8VWMTlI/K0qEKE1EShYO5pN0mINUo4j4xhjFu/mqthmN7smCzzXR2/JZMa0B1e7/MtIIX5xYdr0zN8CeuUZK5i4iaveQcLy7EiBcFjadfEwQuViUMEC6N4JvO7eet/7ctdd+4BgIuLoK+4dCnJfhMEt/4vLfQfD+On2Tof34z+pwJhZhqWWUxMKJfecH6Kf6mYKRlBgomm9v4DT1JGR+ryMxCGT6kg0p0fFnCd87xi3kzgPpzKtzF0cw4sSnMgzaBFNFYqAuDdvsOphkuKaYVPmRkcV/oaelAc02IK4GHc1voNzY1ntC6f1r4Z+o5jluX7QOweHXno3FjveUk2HL4yIbpTmTVO/SXwfx3sb3XgeRezUF4/g8tPIuW+ZR7xXX4cJiDX3rcKg+9KgQvSmOiUtV1hZPgbYQLP9pCH5WciMHzMFzz3Mf4Idx5uzXO2W1R2Ch68yzAwOYUSr2LSABGLXE9+3fDzewIGmlNY0PEqok+yBmwIOBldPkILoms+sXDZMR+m+6S1NjQw2ovLGpvJhvxXT6I5vZJUs6paa6zMSCWQ24//sRsh0RwCSwpx+27PHU4cTdM9st82Ubb42612n6k3CaGGncWscaoeqzsjQQz4z7ed7Dj4TcR5rj905O70EeRdfdxaFXcmFGLlQcdSuv+NAB2o2uMeNBVYhRR6oiuxw49F6KkskCf3QiZNEEdB4Mipq4tnQfaAfqECp7X2JaSgGDplLQ0X9NuC12FuaWLmYDGDW6qR+76mfA+ZwkgnynFfLQAlOq6DSdbDVW2xSBmbK4i0v4L4T6SS8V6JuazOGHTK7aZP6srWGVoLE3FM7oo6dI3RsW7HK5BLERyEggYHozPn9+qWzDNYSjSNAdcYryjplDS30baqLBmiGIa/1JuB0P7OrBcx0kznibWDjPiyBQswu/CMxQV/eRLjJoNLjlPsv87GT7kYJB89SYE4Z313fm9FkNR2ywG4feSUFO/AO3hDV/HMLeA87FcBW8XnQklc0S0azqkTBTahrJRUUtUl9CaGA4OD7BNTti7fxRCOdhDj37C3w6JrGGn5SHOQBgJk9/LtplzUFT0t406zqEux5HlXP+MbgtbzSddne77P4FUyRH3jtRuOBwp6MntF4eQ8nG5INlTNaEGimkm6c9Ehu2Wa5h2RJTCUBhDLxBOGCkb+vTkfM/ut5xuR/Z9rXwDIqDKBtdZPBfLm/fjUb/Gsxk7dfjlXwcuGomUWaapvwxOQUGGUfY/oEXfo+VPHnKKtBLt9ZT46/kfzra0cdeiCFy+16cT+jfanj/QW+fWdLqXlvcHjvXacEJv1ME7g9657hgF6YY7SsCKUIk4S9QTdt7bykf0384/HsuBg/jnh\"";
 let _0x5dd227 = ($.isNode() ? process.env.meituanDrawKeyword : $.getdata("meituanDrawKeyword")) || "",
-    _0xc59899 = ($.isNode() ? process.env.meituanNotify : $.getdata("meituanNotify")) || 1,
+    _0xc59899 = ($.isNode() ? process.env.meituanNotify : $.getdata("meituanNotify")) || 0,
     MT_CK = ($.isNode() ? process.env[env_name] : $.getdata(env_name)) || "",
     _0x816848 = ($.isNode() ? process.env.meituanPosition : $.getdata("meituanPosition")) || _0x7c8055,
     _0x4fe04f = ($.isNode() ? process.env.meituanFingerprint : $.getdata("meituanFingerprint")) || _0x44f917,
@@ -2356,14 +2358,14 @@ async function _0x45ac8e(_0x5a7784 = 0) {
     }
     _0x44f6b0?.["code"] == 0 && (_0x44f6b0 = JSON.parse(_0x44f6b0.data.file.data));
     _0x44f6b0?.["commonNotify"] && _0x44f6b0.commonNotify.length > 0 && $.logAndNotify(_0x44f6b0.commonNotify.join("\n") + "\n");
-    _0x44f6b0?.["commonMsg"] && _0x44f6b0.commonMsg.length > 0 && console.log(_0x44f6b0.commonMsg.join("\n") + "\n");
+    //_0x44f6b0?.["commonMsg"] && _0x44f6b0.commonMsg.length > 0 && console.log(_0x44f6b0.commonMsg.join("\n") + "\n");
     if (_0x44f6b0["meituan"]) {
         let _0x3c801b = _0x44f6b0["meituan"];
         if (_0x3c801b.status == 0) {
             if (_0xf1dcf5 >= _0x3c801b.version) {
                 _0x5c7c58 = true;
                 _0x46f152 = "https://leafxcy.coding.net/api/user/leafxcy/project/validcode/shared-depot/validCode/git/blob/master/meituan.json";
-                //console.log(_0x3c801b.msg[_0x3c801b.status]);
+                console.log(_0x3c801b.msg[_0x3c801b.status]);
                 console.log(_0x3c801b.updateMsg);
                 console.log("现在运行的脚本版本是：" + _0xf1dcf5 + "，最新脚本版本：" + _0x3c801b.latestVersion);
             } else {

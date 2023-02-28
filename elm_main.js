@@ -1559,10 +1559,10 @@ async function _0x13dbad() {
                 };
                 $.log(_0x3afa05.commonNotify.join("\n") + "\n", _0x32956d);
             }
-            _0x3afa05?.["commonMsg"] && _0x3afa05.commonMsg.length > 0 && $.log(_0x3afa05.commonMsg.join("\n") + "\n");
+            //_0x3afa05?.["commonMsg"] && _0x3afa05.commonMsg.length > 0 && $.log(_0x3afa05.commonMsg.join("\n") + "\n");
             if (_0x3afa05[_0x229345]) {
                 let _0x246f76 = _0x3afa05[_0x229345];
-                _0x246f76.status == 0 ? _0x5c1a93 >= _0x246f76.version ? (_0x29c1f0 = true,/* $.log(_0x246f76.msg[_0x246f76.status]),*/ $.log(_0x246f76.updateMsg), $.log("现在运行的脚本版本是：" + _0x5c1a93 + "，最新脚本版本：" + _0x246f76.latestVersion)) : $.log(_0x246f76.versionMsg) : $.log(_0x246f76.msg[_0x246f76.status]);
+                _0x246f76.status == 0 ? _0x5c1a93 >= _0x246f76.version ? (_0x29c1f0 = true,$.log(_0x246f76.msg[_0x246f76.status]), $.log(_0x246f76.updateMsg), $.log("现在运行的脚本版本是：" + _0x5c1a93 + "，最新脚本版本：" + _0x246f76.latestVersion)) : $.log(_0x246f76.versionMsg) : $.log(_0x246f76.msg[_0x246f76.status]);
             } else {
                 $.log(_0x3afa05.errorMsg);
             }
