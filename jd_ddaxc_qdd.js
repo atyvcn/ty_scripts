@@ -6,10 +6,6 @@
 cron: 24 7,19 * * *
 */
 
-process.env.JD_COOKIE=`pt_key=app_openAAJj_aZ1ADD6R_sv6F7SORjjKEHOQCJj0kfjwNZPqi19bINDIZDouuW0MdGfIgkE8IrBFBde-wM; pt_pin=%E8%83%A1%E6%BB%95%E5%AE%87;`;
-process.env.TYUserName="胡滕宇@jd_rfdfcuhKaWwa@atyvcn@jd_ZEgrKLmkqFEv@jd_797317c4ab3d2@jd_PBGrkdzTztNz@jd_45e435152266e"
-
-
 const Env = require('./basic/Env.js');
 const $ = new Env('东东爱消除-抢豆豆');
 const got = require('got');
