@@ -2365,7 +2365,7 @@ async function _0x45ac8e(_0x5a7784 = 0) {
             if (_0xf1dcf5 >= _0x3c801b.version) {
                 _0x5c7c58 = true;
                 _0x46f152 = "https://leafxcy.coding.net/api/user/leafxcy/project/validcode/shared-depot/validCode/git/blob/master/meituan.json";
-                console.log(_0x3c801b.msg[_0x3c801b.status]);
+                //console.log(_0x3c801b.msg[_0x3c801b.status]);
                 console.log(_0x3c801b.updateMsg);
                 console.log("现在运行的脚本版本是：" + _0xf1dcf5 + "，最新脚本版本：" + _0x3c801b.latestVersion);
             } else {
