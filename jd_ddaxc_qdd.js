@@ -1,9 +1,5 @@
-/*
-微信小程序 zippo会员中心
-
-使用类来实现的版本, 包含了简单的类继承
-
-cron: 24 7,19 * * *
+/**
+cron 50 9 * * * jd_ddaxc_qdd.js
 */
 
 const Env = require('./basic/Env.js');
