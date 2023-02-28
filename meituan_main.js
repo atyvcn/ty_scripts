@@ -2357,7 +2357,7 @@ async function _0x45ac8e(_0x5a7784 = 0) {
         return;
     }
     _0x44f6b0?.["code"] == 0 && (_0x44f6b0 = JSON.parse(_0x44f6b0.data.file.data));
-    _0x44f6b0?.["commonNotify"] && _0x44f6b0.commonNotify.length > 0 && $.logAndNotify(_0x44f6b0.commonNotify.join("\n") + "\n");
+   // _0x44f6b0?.["commonNotify"] && _0x44f6b0.commonNotify.length > 0 && $.logAndNotify(_0x44f6b0.commonNotify.join("\n") + "\n");
     //_0x44f6b0?.["commonMsg"] && _0x44f6b0.commonMsg.length > 0 && console.log(_0x44f6b0.commonMsg.join("\n") + "\n");
     if (_0x44f6b0["meituan"]) {
         let _0x3c801b = _0x44f6b0["meituan"];
