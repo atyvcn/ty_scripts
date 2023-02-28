@@ -1,7 +1,7 @@
 /**
 cron 50 9 * * * jd_ddaxc_qdd.js
 */
-const Env = require('./utils/Env.js');
+const Env = require('./basic/Env.js');
 const $ = new Env('东东爱消除-抢豆豆');
 const notify = $.isNode() ? require('./sendNotify.js') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -22,6 +22,14 @@ $.exchangeList=[
     {"res":{"sID":"H007","asConsume":["X028,700"],"iLimit":0,"iDailyLimit":1,"sName":"星星","iTotalLimit":99999,"iTotalDailyLimit":300,"iTotRefreshHour":10},"count":0,"name":"京豆*888","left":1}
 ];
 
+let TYUserName=[];
+if( process.env.TYUserName ){
+    TYUserName=process.env.TYUserName.split("@");
+}else{
+    console.log(`请设置变量 TYUserName 来指定用户，多个用@分隔`)
+    return false
+}
+
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -29,17 +37,6 @@ if ($.isNode()) {
     if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => { };
 } else {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
-}
-
-function obj2param(obj) {
-    let str = "";
-    for (let key in obj) {
-        if (str !== "") {
-            str += "&";
-        }
-        str += key + "=" + encodeURIComponent(obj[key]);
-    }
-    return str
 }
 
 !(async () => {
@@ -50,6 +47,7 @@ function obj2param(obj) {
 
     $.shareCodesArr = []
     $.datalist = {};
+    let taskAll = [];
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
@@ -58,6 +56,7 @@ function obj2param(obj) {
             $.isLogin = true;
             $.nickName = '';
             message = '';
+            if( !$.UserName || TYUserName.indexOf($.UserName)===-1 ) continue;
             await GetUA();
             $.datalist[$.UserName] = { "UA": $.UA };
             //await TotalBean();
@@ -71,12 +70,11 @@ function obj2param(obj) {
                 }
                 continue
             }
-            await jdBeauty()
-            console.log($.time('yyyy-MM-dd hh:mm:ss S'));
-            buyGood("H001")
-            //buyGood("H004")
-            //buyGood("H007")
-            if ($.index >= 10) break;
+            await jdBeauty();
+            let money = $.datalist[$.UserName].money;
+            if(money>=900){
+                taskAll.push(await buyGood("H007"));
+            }
         }
     }
 
@@ -91,9 +89,11 @@ function obj2param(obj) {
     console.log(end);
     var timing = end - nowtime;
     console.log(timing);
-    setInterval(() => {
-        alert('你下一个定时任务')
+    setInterval(async () => {
+        console.log($.time('yyyy-MM-dd hh:mm:ss S'));
+        await Promise.all(taskAll);
     }, timing);
+
 })()
     .catch((e) => {
         $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -102,29 +102,12 @@ function obj2param(obj) {
         $.done();
     })
 
-function timeoutFunc(config, func) {
-    config.runNow && func()
-    let nowTime = new Date().getTime()
-
-    let timePoints = config.time.split(':').map(i => parseInt(i))
-
-    let recent = new Date().setHours(...timePoints)
-
-    recent >= nowTime || (recent += 24 * 3600000)
-
-    setTimeout(() => {
-        func()
-        setInterval(func, config.interval * 3600000)
-    }, recent - nowTime)
-
-}
-
 async function jdBeauty() {
     $.reqId = 1
     await getIsvToken()
     await getIsvToken2()
     await getActInfo()
-    await marketGoods()
+    //await marketGoods()
 }
 
 // 获得IsvToken
