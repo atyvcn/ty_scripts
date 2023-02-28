@@ -4,7 +4,7 @@ let TYQLDG_MODE = 0,
 //TYQLDG_SEND=!(isset(process.env.TYQLDG_SEND) && process.env.TYQLDG_SEND=='disable'),
 TYQLDG_URL=process.env.TYQLDG_URL,TYQLDG_TOKEN=process.env.TYQLDG_TOKEN;
 //0 = Default / 1 = Debug!
-if( isset(process.env.TYQLDG_MODE) ){
+if( TYQLDG.isset(process.env.TYQLDG_MODE) ){
     TYQLDG_MODE=process.env.TYQLDG_MODE;
 }else if( process.env.TYQLDG_DEBUG ){
     TYQLDG_MODE=1;
