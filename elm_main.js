@@ -5,13 +5,13 @@
 签到，吃货豆任务，现金提款机，笔笔返，抢10元券
 
 自行捉包把饿了么域名包里的Cookie填到ELM_CK里, 多账号换行或&或@隔开
-export ELM_CK="USERID=xxxxx; SID=xxxxxxxx; cookie2=yyyyyyy;"
+export ELM_CK="UTUSER=xxxxx; SID=xxxxxxxx; cookie2=yyyyyyy;"
 
 默认任务最大并发数为50, 需要更改的话, 填写变量 ELM_Thread, 以下为3账号并发配置:
 export ELM_Thread=3
 
 需要抢10元券的号请在对应账号ck后面加上 grabCoupon=1; ，或者在变量ELM_GrabCoupon里面对应账号位置填上1(&隔开)，否则默认不抢
-如：export ELM_CK="USERID=xxxxx; cookie2=yyyyyyy; grabCoupon=1;"
+如：export ELM_CK="UTUSER=xxxxx; cookie2=yyyyyyy; grabCoupon=1;"
 或单独设置变量：export ELM_GrabCoupon="1&1&0&0" (代表账号1和2抢券，3和4不抢)
 
 抢券时间默认为9点59分59秒200毫秒开始，需要改的话自己设置变量ELM_CouponTime
@@ -331,7 +331,7 @@ class _0x5d3aa8 extends _0x4e0854 {
                     await this.refresh_ck(_0x41cd64);
                 } else {
                     if (_0x491023.includes("FAIL_SYS_SESSION_EXPIRED")) {
-                        await expireNotify(this.USERID,this.index);
+                        await expireNotify(this.UTUSER,this.index);
                         this.log("CK过期")//, {"notify": true});
                     } else {
                         this.log("刷新CK失败: " + _0x491023);
@@ -377,7 +377,7 @@ class _0x5d3aa8 extends _0x4e0854 {
             _0x248230?.["mobile"] ? this.name = _0x248230.mobile : this.log("获取账号失败");
 
             if(!_0x248230?.["mobile"]){
-                await expireNotify(this.USERID,this.index);
+                await expireNotify(this.UTUSER,this.index);
             }
 
         } catch (_0x5cff28) {
