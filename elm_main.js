@@ -331,7 +331,7 @@ class _0x5d3aa8 extends _0x4e0854 {
                     await this.refresh_ck(_0x41cd64);
                 } else {
                     if (_0x491023.includes("FAIL_SYS_SESSION_EXPIRED")) {
-                        await expireNotify(this.munb,this.index);
+                        await expireNotify(this.USERID,this.index);
                         this.log("CK过期")//, {"notify": true});
                     } else {
                         this.log("刷新CK失败: " + _0x491023);
@@ -377,7 +377,7 @@ class _0x5d3aa8 extends _0x4e0854 {
             _0x248230?.["mobile"] ? this.name = _0x248230.mobile : this.log("获取账号失败");
 
             if(!_0x248230?.["mobile"]){
-                await expireNotify(this.munb,this.index);
+                await expireNotify(this.USERID,this.index);
             }
 
         } catch (_0x5cff28) {
