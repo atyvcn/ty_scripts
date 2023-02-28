@@ -1,5 +1,8 @@
 const got = require('got');
 
+const TYQLDG_URL=process.env.TYQLDG_URL,
+TYQLDG_TOKEN=process.env.TYQLDG_TOKEN;
+
 const TYQLDG={
     async TYQLDG_API(type,json){
         if( TYQLDG_URL && TYQLDG_URL.substring(0,4)=="http" && TYQLDG_TOKEN.length>5 ){
