@@ -3,18 +3,16 @@ cron 50 9 * * * jd_ddaxc_qdd.js
 */
 const Env = require('./basic/Env.js');
 const $ = new Env('东东爱消除-抢豆豆');
-const notify = $.isNode() ? require('./sendNotify.js') : '';
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let exchangeName = ['京豆*1888']
 if (process.env.EXCHANGE_EC) {
-    exchangeName = process.env.EXCHANGE_EC.indexOf('&')
+    exchangeName = process.env.EXCHANGE_EC.split('&')
 }
 const CryptoJS = require('crypto-js')
 
 let ACT_ID = 'A_112790_R_1_D_20201028'
 //Node.js用户请在jdCookie.js处填写京东ck;
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '', message;
+let cookiesArr = process.env.JD_COOKIE.split('&'), cookie = '', message;
 
 $.exchangeList=[
     {"res":{"sID":"H001","asConsume":["X028,900"],"iLimit":0,"iDailyLimit":1,"sName":"星星","iTotalLimit":99999,"iTotalDailyLimit":250,"iTotRefreshHour":10},"count":0,"name":"京豆*1888","left":1},
@@ -30,24 +28,14 @@ if( process.env.TYUserName ){
     return false
 }
 
-if ($.isNode()) {
-    Object.keys(jdCookieNode).forEach((item) => {
-        cookiesArr.push(jdCookieNode[item])
-    })
-    if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => { };
-} else {
-    cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
-}
-
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
         return;
     }
 
-    $.shareCodesArr = []
     $.datalist = {};
-    let taskAll = [];
+    let newCookiesArr,taskAll = [];
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             cookie = cookiesArr[i];
@@ -59,38 +47,41 @@ if ($.isNode()) {
             if( !$.UserName || TYUserName.indexOf($.UserName)===-1 ) continue;
             await GetUA();
             $.datalist[$.UserName] = { "UA": $.UA };
-            //await TotalBean();
             console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
-            if (!$.isLogin) {
-                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, { "open-url": "https://bean.m.jd.com/" });
-                if ($.isNode()) {
-                    await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-                } else {
-                    $.setdata('', `CookieJD${i ? i + 1 : ""}`);//cookie失效，故清空cookie。$.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-                }
-                continue
-            }
             await jdBeauty();
             let money = $.datalist[$.UserName].money;
             if(money>=900){
-                taskAll.push(await buyGood("H007"));
+                newCookiesArr.push(cookie);
+                //taskAll.push(await buyGood("H001"));
             }
         }
     }
 
     //获取当前时间
     var nowtime = new Date().getTime();
-    console.log(nowtime);
+    //console.log(nowtime);
     //获取下一个小时
     var h = new Date().getHours() + 1;
-    console.log(h);
+    //console.log(h);
     // 获取下一个小时的时间戳
     var end = new Date(new Date(new Date().toLocaleDateString()).getTime() + h * 60 * 60 * 1000 - 1).getTime();
-    console.log(end);
+    //console.log(end);
     var timing = end - nowtime;
-    console.log(timing);
+    console.log(`\n等待${timing}ms 开抢\n`);
     setInterval(async () => {
         console.log($.time('yyyy-MM-dd hh:mm:ss S'));
+        for (let i = 0; i < newCookiesArr.length; i++) {
+            cookie = newCookiesArr[i];
+            if (cookie) {
+                $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+                $.index = i + 1;
+                $.nickName = '';
+                message = '';
+                if( !$.UserName || TYUserName.indexOf($.UserName)===-1 ) continue;
+                console.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
+                taskAll.push(await buyGood("H001"));
+            }
+        }
         await Promise.all(taskAll);
     }, timing);
 
