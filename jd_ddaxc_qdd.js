@@ -193,15 +193,8 @@ class UserClass extends BasicClass {
                     this.token2=result.token;
                     this.money=JSON.parse(result.info.platform)['money'];
                     this.pltId=result.info.pltId;
-                    if(this.money>=900){
-                        console.log(`当前星星：${this.money}，可以抢1888豆`);
-                        await this.checkLogin(result.info)
-                    }else{
-                        //删除不满足的
-                        $.userList.splice(this.index-1, 1);
-                        $.userCount = $.userList.length;
-                        console.log(`当前星星：${this.money}`);
-                    }
+                    console.log(`当前星星：${this.money}`);
+                    await this.checkLogin(result.info);
                 }
             } else {
                 console.log(`获取信息失败[${result?.code}]: ${result?.errmsg}`);
@@ -353,8 +346,17 @@ class UserClass extends BasicClass {
     });
 
     //正常的做任务流程
-    for(let user of $.userList) {
+    for(let i=0,user;i<$.userCount;i++) {
+        user=$.userList[i];
         await user.userTask();
+        if(900>user.money){
+            console.log(`没有足够的星星，跳过兑换1888豆`);
+            //删除不满足的
+            //user.index--;
+            $.userList.splice(i, 1);
+            $.userCount = $.userList.length;
+            i--
+        }
         await $.wait(1000);
     }
     if($.userCount){
@@ -368,7 +370,7 @@ class UserClass extends BasicClass {
         var end = new Date(new Date(new Date().toLocaleDateString()).getTime() + h * 60 * 60 * 1000 - 1).getTime();
         //console.log(end);
         var timing = end - nowtime;
-        console.log(`等待${$.time('hh:mm:ss',end)}抢豆豆`);
+        console.log(`等待${$.time('hh:mm:ss',end)}为${$.userCount}位用户抢豆豆`);
         await $.wait(timing);
         console.log($.time('yyyy-MM-dd hh:mm:ss S'));
         //封装的并发
