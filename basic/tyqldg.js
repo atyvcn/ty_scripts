@@ -1,16 +1,5 @@
 const got = require('got');
 
-let TYQLDG_MODE = 0,
-//TYQLDG_SEND=!(isset(process.env.TYQLDG_SEND) && process.env.TYQLDG_SEND=='disable'),
-TYQLDG_URL=process.env.TYQLDG_URL,TYQLDG_TOKEN=process.env.TYQLDG_TOKEN;
-//0 = Default / 1 = Debug!
-if( TYQLDG.isset(process.env.TYQLDG_MODE) ){
-    TYQLDG_MODE=process.env.TYQLDG_MODE;
-}else if( process.env.TYQLDG_DEBUG ){
-    TYQLDG_MODE=1;
-}
-if( TYQLDG_MODE==1 ) console.log = () => { };
-
 const TYQLDG={
     async TYQLDG_API(type,json){
         if( TYQLDG_URL && TYQLDG_URL.substring(0,4)=="http" && TYQLDG_TOKEN.length>5 ){
