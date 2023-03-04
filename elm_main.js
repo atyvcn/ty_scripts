@@ -1307,7 +1307,7 @@ class _0x4aa47f extends _0x1598f2 {
         }
         let _0x38f795 = "============= 账号[" + this.index + "] =============\n";
         if (this.name) {
-            _0x38f795 += "手机：" + this.name + "\n";
+            _0x38f795 += "账号：" + this.name + "\n";
         }
         if (this.expireTime) {
             _0x38f795 += "CK过期时间: " + this.expireTime + "\n";
