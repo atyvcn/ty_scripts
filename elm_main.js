@@ -313,7 +313,7 @@ class _0x4aa47f extends _0x1598f2 {
                     await this.refresh_ck(_0x234563);
                 } else {
                     if (_0x259d8f.includes("FAIL_SYS_SESSION_EXPIRED")) {
-                        await expireNotify(this.UTUSER,this.index);
+                        //await expireNotify(this.UTUSER,this.index);
                         this.log("CK过期");
                     } else {
                         this.log("刷新CK失败: " + _0x259d8f);
@@ -326,19 +326,17 @@ class _0x4aa47f extends _0x1598f2 {
             return Promise.resolve();
         }
     }
-    async ["set_cookie"](_0x42fa71) {
+    async ["set_cookie"](exchangeSessionValue) {
         try {
-            const _0x1ec6d2 = {
-                "exchangeSessionValue": _0x42fa71
-            };
-            const _0x39469e = {
+            await this.request({
                 "fn": "set_cookie",
                 "method": "post",
                 "url": "https://alsc-session.ele.me/set_cookie",
-                "json": _0x1ec6d2,
+                "json": {
+                    "exchangeSessionValue": exchangeSessionValue
+                },
                 "cookieJar": this.cookieJar
-            };
-            await this.request(_0x39469e);
+            });
         } catch (_0x3e66b5) {
             $.log(_0x3e66b5);
         } finally {
@@ -1373,6 +1371,7 @@ class _0x4aa47f extends _0x1598f2 {
     $.log("\n-------------- 收入详情 --------------");
     await $.threadTask("final_check", 1);
 })().catch(_0x152edb => $.log(_0x152edb)).finally(() => $.exitNow());
+
 async function _0x57daaa() {
     let _0x567aa3 = $.userList.filter(_0x36e2d4 => _0x36e2d4.valid && (_0x36e2d4.grabCoupon || _0x36e2d4.grabCouponFlagEnv));
     if (_0x567aa3.length) {
