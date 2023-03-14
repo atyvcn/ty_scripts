@@ -306,6 +306,7 @@ class _0x4aa47f extends _0x1598f2 {
                 this.expireTime = $.time("yyyy-MM-dd hh:mm:ss", Number(_0x55d3ac.data.expiredTime) || 0);
                 this.log("刷新CK成功");
                 await this.set_cookie(_0x55d3ac.data.exchangeSessionValue);
+                //console.log(this.cookieJar.getCookieString("https://mtop.ele.me"));
             } else {
                 if ((_0x259d8f.includes("FAIL_SYS_TOKEN_EMPTY") || _0x259d8f.includes("FAIL_SYS_TOKEN_EMPTY")) && !_0x52dd06.expire_retry) {
                     let _0x234563 = Object.assign({}, _0x52dd06);
@@ -313,7 +314,7 @@ class _0x4aa47f extends _0x1598f2 {
                     await this.refresh_ck(_0x234563);
                 } else {
                     if (_0x259d8f.includes("FAIL_SYS_SESSION_EXPIRED")) {
-                        //await expireNotify(this.UTUSER,this.index);
+                        await expireNotify(this.UTUSER,this.index);
                         this.log("CK过期");
                     } else {
                         this.log("刷新CK失败: " + _0x259d8f);
@@ -1329,10 +1330,7 @@ class _0x4aa47f extends _0x1598f2 {
                 _0x38f795 += "-- " + _0x1acd9e + "，收入" + _0x739c9a.plusCount + "豆" + (_0x739c9a.useCount ? "，支出" + _0x739c9a.useCount + "豆" : "") + (_0x739c9a.expireCount ? "，月底将过期" + _0x739c9a.expireCount + "豆" : "") + "\n";
             }
         }
-        const _0x47de8b = {
-            "notify": true
-        };
-        $.log(_0x38f795, _0x47de8b);
+        $.log(_0x38f795, {"notify": true});
     }
 }
 !(async () => {
