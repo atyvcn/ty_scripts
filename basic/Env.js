@@ -101,9 +101,10 @@ function Env(name,e) {
             }
             return ret.join(c);
         }
-        str2json(str, decode = false) {
+        str2json(str,s='&',decode = false) {
             let ret = {};
-            for (let item of str.split('&')) {
+            if(s===true){s='&';decode=true;}
+            for (let item of str.split(s)) {
                 if(!item) continue;
                 let idx = item.indexOf('=');
                 if(idx == -1) continue;
@@ -113,6 +114,16 @@ function Env(name,e) {
                 ret[k] = v;
             }
             return ret;
+        }
+        CkToJson(ck){
+            if( ck.indexOf("=") ){
+                return this.str2json(ck.replace(/\s+/g,""),';',true)
+            }else return false;  
+        }
+        JsonToCK(Obj){
+            if( typeof Obj !='object' ) return false;
+            let str=this.json2str(Obj, "; ", true);
+            return str?str+";":"";
         }
         randomPattern(pattern, charset = 'abcdef0123456789') {
             let str = '';

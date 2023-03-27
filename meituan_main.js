@@ -235,7 +235,7 @@ class _0x153f00 {
         this.index = ++_0x1e2331;
         this.name = this.index;
         this.valid = false;
-        Object.assign(this, CkToJson(ck));//$.str2json(ck)
+        Object.assign(this, CkToJson(ck));
         this.mobile = "";
         this.unoinid = $.randomString(51);
         this.uuid = this.uuid || "0000000000000" + this.unoinid.toUpperCase();

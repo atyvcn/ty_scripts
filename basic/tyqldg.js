@@ -25,7 +25,7 @@ const TYQLDG={
             for(let i=0,v,l=arr.length;i<l;i++){
                 if( v=arr[i].trim() ){
                     let n=v.indexOf("=");
-                    if( n!==-1 ) Obj[v.substr(0,n)]=v.substr(n+1);
+                    if( n!==-1 ) Obj[v.substr(0,n)]=decodeURIComponent(v.substr(n+1));
                 }
             }
             return Obj;
@@ -35,7 +35,7 @@ const TYQLDG={
         if( typeof Obj !='object' ) return false;
         var cka = [];
         for(key in Obj) {
-            cka.push(key + "=" + Obj[key]);
+            cka.push(key + "=" + encodeURIComponent(Obj[key]));
         }
         return cka.length?cka.join("; ")+";":"";
     },
@@ -64,5 +64,4 @@ const TYQLDG={
         return Buffer.from(string).toString('base64');
     }
 }
-
 module.exports = TYQLDG;
