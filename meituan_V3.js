@@ -31,6 +31,10 @@ $.get = function (result, name, value = "") {
   result?.["hasOwnProperty"](name) && (value1 = result[name]);
   return value1;
 }
+$.wait_gap_interval=async function(_0x58be0e, _0x285f22) {
+  let _0x505076 = Date.now() - _0x58be0e;
+  _0x505076 < _0x285f22 && (await this.wait(_0x285f22 - _0x505076));
+}
 
 const _0x2caf33 = 3.02,
   _0x1fedb3 = "meituan",
@@ -133,7 +137,7 @@ class _0x444224 {
     $.log(_0x5b997b + _0x4a15d5, _0x480a5f);
   }
   async ["request"](_0x5bf3c3) {
-    const _0x35d5e5 = {
+    var _0x35d5e5 = {
       "statusCode": -1,
       "headers": null,
       "result": null
@@ -183,12 +187,11 @@ class _0x444224 {
             _0x5abb9b = JSON.parse(_0x5abb9b);
           } catch { }
         }
-        const _0x13f1fb = {
+        _0x35d5e5 = {
           "statusCode": _0x5927bc,
           "headers": _0x3436bf,
           "result": _0x5abb9b
         };
-        _0x35d5e5 = _0x13f1fb;
       }
     } catch (_0x95884b) {
       console.log(_0x95884b);
