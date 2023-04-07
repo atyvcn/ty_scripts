@@ -14,7 +14,7 @@ cron: 31 2,7,11,17,21 * * *
 const Env = require('./basic/Env.js');
 const { TYQLDG_API, base64_encode } = require('./basic/tyqldg');
 
-const $ = new Env('京东资产变动'),
+const $ = new Env('美团'),
   got = require('got'),
   envPrefix = "MT_",
   envSplitor = ["\n", "&", "@"],//支持多种分割，但要保证变量里不存在这个字符
