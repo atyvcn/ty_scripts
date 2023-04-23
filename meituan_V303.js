@@ -21,7 +21,7 @@ const $ = new Env('美团'),
     got = require("got"),
     envPrefix = "MT_",
     envSplitor = ["\n", "&", "@"],
-    ckNames = [envPrefix + "Cookie"],
+    ckNames = [envPrefix + "CK"],
     env_name = envPrefix + "CK",
     MT_AutoWithdraw = process.env[envPrefix + "AutoWithdraw"] || "true",
     DEFAULT_TIMEOUT = 8000,
@@ -142,7 +142,7 @@ class _0x1ceac5 {
         $.log(_0x22316c + _0x469119, _0x27d901);
     }
     async ["request"](_0x23f755) {
-        const _0x18fc53 = {
+        var _0x18fc53 = {
             "statusCode": -1,
             "headers": null,
             "result": null
@@ -177,12 +177,11 @@ class _0x1ceac5 {
                         _0x59ebc5 = JSON.parse(_0x59ebc5);
                     } catch { }
                 }
-                const _0x34ff23 = {
+                _0x18fc53 = {
                     "statusCode": _0x324dd8,
                     "headers": _0x1171b1,
                     "result": _0x59ebc5
                 };
-                _0x18fc53 = _0x34ff23;
             }
         } catch (_0x5156be) {
             console.log(_0x5156be);
