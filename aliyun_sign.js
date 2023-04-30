@@ -78,13 +78,17 @@ if (process.env[env_name]) {
 
         $.wait(mt_rand(1000,2000));
         //签到
+        const headers={
+            //"Authorization": token,
+            Authorization: 'Bearer ' + access_token,
+            'Content-Type': 'application/json',
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 D/C501C6D2-FAF6-4DA8-B65B-7B8B392901EB"
+        };
+
         let SigninData =await post({
             url: 'https://member.aliyundrive.com/v1/activity/sign_in_list',
             body: queryBody,
-            headers: {
-                Authorization: 'Bearer ' + access_token,
-                'Content-Type': 'application/json'
-            },
+            headers,
             timeout: 5000
         })
         const sendMessage = [remarks]
@@ -93,13 +97,44 @@ if (process.env[env_name]) {
         }
         sendMessage.push('签到成功')
         const { signInLogs, signInCount } = SigninData.result
-        //if l['status'] != 'miss':  v.status === 'normal'
-        const signedArray = signInLogs.filter(v => v.status != 'miss') // 已签到信息组
-        const currentSignInfo = signedArray[signedArray.length - 1] // 当天签到信息
-        sendMessage.push(`本月累计签到 ${signInCount} 天`)
-        //   当天签到是否有奖励
-        if (currentSignInfo.reward) sendMessage.push(`本次签到获得${currentSignInfo.notice}`)
-
+        let msg = "";
+        const notSignInDaysLists = [];
+        const signInDaysLists = [];
+        if (signInLogs.length > 0) {
+            for (let i = 0; i < signInLogs.length; i++) {
+                const signInLogsDict = signInLogs[i];
+                const status = signInLogsDict.status || "";
+                const day = signInLogsDict.day || "";
+                const isReward = signInLogsDict.isReward || false;
+                if (status === "") {
+                    console.log(`signInLogsDict=${JSON.stringify(signInLogsDict)}`);
+                    console.error(`签到信息获取异常:${resp_text}`);
+                } else if (status === "miss") {
+                    //console.log(`第${day}天未打卡`);
+                    notSignInDaysLists.push(day);
+                } else if (status === "normal") {
+                    let reward = {};
+                    if (!isReward) {//签到但未领取奖励
+                        //去领取奖励
+                        let RewardData =await post({
+                            url: 'https://member.aliyundrive.com/v1/activity/sign_in_reward',
+                            body:JSON.stringify({'signInDay': day}),
+                            headers,
+                            timeout: 5000
+                        })
+                        const result = RewardData.result || {};
+                        reward={ "name":result.name || '', "description":result.description || '' };
+                        sendMessage.push(`${day==signInCount?"✅" : "☑"}打卡第${day}天，去获得奖励：**[${reward.name || "无奖励"}->${reward.description || ""}]**`)
+                    } else {
+                        reward = signInLogsDict.reward || {};
+                    }
+                    signInDaysLists.push(day);
+                }
+            }
+            sendMessage.push(`🔥打卡进度:${signInCount}/${signInLogs.length}`);
+        } else {
+            console.log(`SigninData=${JSON.stringify(SigninData)}`);
+        }
         console.log(sendMessage.join(', '))
         console.log('\n')
         messages.push(sendMessage.join(', '))
@@ -113,7 +148,6 @@ if (process.env[env_name]) {
 .finally(() => {
     $.done();
 })
-
 
 function post(obj) {
     return new Promise((resolve) => {
