@@ -8,8 +8,8 @@ APP每日赚钱: 默认会每日自动随机, 要关闭随机提现的话设置�
 export MT_AutoWithdraw="false"
 关闭自动提现可以存金币到50元余额再提现, 但是50元提现会审核2天, 可能会黑
 
-自行捉包把meituan.com里面的token(一般在请求头里)填到变量 meituanCookie 中, 多账号换行或&或@隔开
-export MT_Cookie="token=AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+自行捉包把meituan.com里面的token(一般在请求头里)填到变量 MT_CK 中, 多账号换行或&或@隔开
+export MT_CK="token=AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 cron: 0 0,7,11,17,21 * * *
 */
@@ -21,7 +21,7 @@ const $ = new Env('美团'),
     got = require("got"),
     envPrefix = "MT_",
     envSplitor = ["\n", "&", "@"],
-    ckNames = [envPrefix + "Cookie"],
+    ckNames = [envPrefix + "CK"],
     MT_AutoWithdraw = process.env[envPrefix + "AutoWithdraw"] || "true",
     DEFAULT_TIMEOUT = 8000,
     DEFAULT_RETRY = 3;
@@ -191,8 +191,8 @@ class _0xbcfc {
     }
 }
 let _0x1e44af = new _0xbcfc();
-class _0x40467a extends _0xbcfc {
-    constructor(_0x58e804) {
+class UserClass extends _0xbcfc {
+    constructor(ck) {
         super();
         Object.assign(this, $.CkToJson(ck));
         this.t_earnDaily = 0;
@@ -297,7 +297,7 @@ class _0x40467a extends _0xbcfc {
             _0x489de4.searchParams.fpPlatform = 13;
             _0x489de4.searchParams.isMini = 1;
             _0x489de4.searchParams.token = this.token;
-            _0x489de4.searchParams.inviteCode = inviteCode;
+            _0x489de4.searchParams.inviteCode = this.name=="nyqty"?"NnOIp-QOs8SiYF1dcSlL5r8phPrCf6qkH7evMyjIoup2NXxNCLYcBbd3bqpv2X2Isa4sAcwwtgMW1R1eMkRlyETf6P5c6xL_sqJlwVhRVvg7xRINt5TQ85mSulLMxdBYgcXM_UYwGoZo7b5C7uiD5Q":inviteCode;
             let {
                 result: _0x2ff5a8
             } = await this.request(_0x489de4),
