@@ -14,20 +14,18 @@ export MT_CK="token=AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 cron: 2 0,7,11,17,21 * * *
 */
 const Env = require('./basic/Env.js');
+const MT = require('./basic/mt.js');
 const { TYQLDG_API, base64_encode } = require('./basic/tyqldg');
 
 const $ = new Env('美团'),
     got = require("got");
-let mtgsig_leaf = null,
-    _0x257c4f = null;
+let _0x257c4f = null;
 const envPrefix = "MT_",
     envSplitor = ["\n", "&"],
     ckNames = [envPrefix + "CK"];
-try {
-    mtgsig_leaf = require("./mtgsig_leaf");
-} catch {
-    _0x257c4f = process.env[envPrefix + "Sign"] || "https://service.leafxxx.win/meituan";
-}
+
+_0x257c4f = process.env[envPrefix + "Sign"] || "https://service.leafxxx.win/meituan";
+
 const MT_AutoWithdraw = process.env[envPrefix + "AutoWithdraw"] || "true",
     DEFAULT_TIMEOUT = 8000,
     DEFAULT_RETRY = 3;
@@ -125,19 +123,14 @@ class _0x3c8f2b {
         this.index = $.userIdx++;
         this.name = "";
         this.valid = true;
-        const _0x1196a4 = {
-            "limit": 0
-        };
-        const _0x32b2b5 = {
-            "Connection": "keep-alive"
-        };
-        const _0x2fc2d1 = {
-            "retry": _0x1196a4,
+        this.got = got.extend({
+            "retry": {"limit": 0},
             "timeout": DEFAULT_TIMEOUT,
             "followRedirect": false,
-            "headers": _0x32b2b5
-        };
-        this.got = got.extend(_0x2fc2d1);
+            "headers": {
+                "Connection": "keep-alive"
+            }
+        });
     }
     ["log"](_0x542ecb, _0x3bfe52 = {}) {
         var _0x3552fc = "",
@@ -176,20 +169,16 @@ class _0x3c8f2b {
                 }
             }
             if (_0x110358) {
-                let {
-                    statusCode: _0x1af904,
-                    headers: _0xf58b7a,
-                    body: _0x502594
-                } = _0x110358;
-                if (_0x502594) {
+                let {statusCode,headers,body} = _0x110358;
+                if (body) {
                     try {
-                        _0x502594 = JSON.parse(_0x502594);
+                        body = JSON.parse(body);
                     } catch { }
                 }
                 const _0x984f2d = {
-                    "statusCode": _0x1af904,
-                    "headers": _0xf58b7a,
-                    "result": _0x502594
+                    "statusCode": statusCode,
+                    "headers": headers,
+                    "result": body
                 };
                 _0x253a07 = _0x984f2d;
             }
@@ -223,6 +212,7 @@ class UserClass extends _0x3c8f2b {
                 "cookie": "token=" + this.token + "; openid=" + this.openid + ";"
             }
         });
+        
     }
     ["notify_coupon"](_0x625402, _0x399642 = "领券") {
         for (let _0x38627b of _0x625402) {
@@ -232,30 +222,21 @@ class UserClass extends _0x3c8f2b {
             this.log(_0x399642 + ": " + _0x38627b, _0x4d9252);
         }
     }
-    async ["get_mtgsig"](_0x1f45c4, _0x39fa1c) {
-        const _0x3ade2a = {
-            "a1": "1.0",
-            "a2": 1683336538151,
-            "a3": "",
-            "a4": "e89b599e99d425ef9e599be8ef25d499b97136065654e29f",
-            "a5": "x/c9ZOZB6k6qqeSXpnhgQHk10zsLs2P22bVEnqeWTCdS0G8wXXNHHB6PaFz62LgJtRc4Lu5vZyf1myzp4XmzEAVicki=",
-            "a6": "h1.2u/+0UE3UaX2BwH/cq+aMlU6JnfjhiyRXBdPnx91/XnpBun5KRP6kFHfWi/qhCha44AnOvCaQILwM7ibGAySCrZ0hgXd8HUtnbb9nT2ORXe6j4o23Mb64cPb8jNk9l6aRm6Si9qO6m4s7xFsCmF6UmI0gzprOVZ5CRRDUehMvUhVPpxIL6INfDcS1HebILXdNo/CpFzC9q6zKdq1kk4TeUmhEx3EDNqDZExihZB0qepT9L8W5NsbJs8kHXdLXx5/C1wlLccXt9HpR1PrEnevp9OWLXJQQj+4ipJuwceKb3bv2Ff4n+XviJf2+YK7dPvAT/7LVDObfZBpFhSrTUrWpTG8ubX7tq/OlxexIYqxmwTKJumqG8hIIkaBqE27Y3JNL2dYuRRCdtB2EAFA9lFi/vPzmDsYMzGMTCevh7DDaIeY=",
-            "a7": "",
-            "x0": 4,
-            "d1": "d00459adac4117271a05b410d8275ade"
-        };
-        let _0x10a914 = {
-            "headers": {
-                "mtgsig": JSON.stringify(_0x3ade2a)
-            }
-        };
-        if (mtgsig_leaf) {
-            _0x10a914 = mtgsig_leaf.get_mtgsig(_0x1f45c4, _0x39fa1c);
+    async ["get_mtgsig"](url, data) {
+        var _0x10a914={}
+        if (MT) {
+            let req = MT.signReq({
+                "url": url,
+                "method": "POST",
+                "headers": this.got.defaults.options.headers,
+                'data': data
+            })
+            _0x10a914.mtgsig = req['headers']['mtgsig'];
         } else {
             if (_0x257c4f) {
                 const _0x540b6e = {
-                    "url": _0x1f45c4,
-                    "data": _0x39fa1c
+                    "url": url,
+                    "data": data
                 };
                 const _0x1faefd = {
                     "fn": "get_mtgsig",
@@ -274,8 +255,8 @@ class UserClass extends _0x3c8f2b {
     }
     async ["getfp"](_0x57e7b6 = false) {
         if (!this.valid_fp) {
-            if (mtgsig_leaf && _0x57e7b6) {
-                this.fp = mtgsig_leaf.getMTFingerprint();
+            if (MT && _0x57e7b6) {
+                this.fp = MT.getMTFingerprint();
                 this.valid_fp = true;
             } else {
                 if (_0x257c4f && _0x57e7b6) {
@@ -907,7 +888,7 @@ class UserClass extends _0x3c8f2b {
     async ["startUserTask"](_0x5599d6, _0x12e53a, _0xefd22b, _0x5920b3 = {}) {
         try {
             let _0x47d8d2 = _0x5920b3?.["need_sign"],
-                _0x145101 = "https://cube.meituan.com/topcube/api/toc/task/startUserTask",
+                url = "https://cube.meituan.com/topcube/api/toc/task/startUserTask",
                 _0x351047 = {
                     "uuid": this.uuid,
                     "userId": this.userId,
@@ -923,17 +904,14 @@ class UserClass extends _0x3c8f2b {
             const _0x2b64f2 = {
                 "fn": "startUserTask",
                 "method": "post",
-                "url": _0x145101,
+                "url": url,
                 "json": _0x351047
             };
             if (_0x47d8d2) {
-                let {
-                    headers: _0x2ece8b
-                } = await this.get_mtgsig(_0x145101, _0x351047);
-                const _0x17e701 = {
-                    "mtgsig": _0x2ece8b.mtgsig
+                let {headers} = await this.get_mtgsig(url, _0x351047);
+                _0x2b64f2.headers = {
+                    "mtgsig": headers.mtgsig
                 };
-                _0x2b64f2.headers = _0x17e701;
             }
             let {
                 result: _0x1eddec
@@ -1712,11 +1690,9 @@ class UserClass extends _0x3c8f2b {
             for (let _0x2268aa in _0x338425) {
                 _0x450a2a.searchParams.append(_0x2268aa, _0x338425[_0x2268aa]);
             }
-            let {
-                headers: _0x3c1d0b
-            } = await this.get_mtgsig(_0x450a2a.toString(), _0x23cb78);
+            let {headers} = await this.get_mtgsig(_0x450a2a.toString(), _0x23cb78);
             const _0x24a6b2 = {
-                "mtgsig": _0x3c1d0b.mtgsig
+                "mtgsig": headers.mtgsig
             };
             const _0x5d7a79 = {
                 "fn": "batchfetchcomponentcouponV2",
