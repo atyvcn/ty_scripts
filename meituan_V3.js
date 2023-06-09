@@ -223,15 +223,14 @@ class UserClass extends _0x3c8f2b {
         }
     }
     async ["get_mtgsig"](url, data) {
-        var _0x10a914={}
+        var Req={}
         if (MT) {
-            let req = MT.signReq({
+            Req=MT.signReq({
                 "url": url,
                 "method": "POST",
                 "headers": this.got.defaults.options.headers,
                 'data': data
             })
-            _0x10a914.mtgsig = req['headers']['mtgsig'];
         } else {
             if (_0x257c4f) {
                 const _0x540b6e = {
@@ -244,14 +243,11 @@ class UserClass extends _0x3c8f2b {
                     "url": _0x257c4f + "/mtgsig",
                     "json": _0x540b6e
                 };
-                let {
-                    result: _0x37659f
-                } = await this.request(_0x1faefd),
-                    _0x188d0f = _0x37659f?.["code"];
-                _0x188d0f === 0 ? _0x10a914 = _0x37659f.data : this.log("获取mtgsig失败[" + _0x188d0f + "]: " + _0x37659f?.["msg"]);
+                let {result} = await this.request(_0x1faefd),code = result?.["code"];
+                code === 0 ? Req = result.data : this.log("获取mtgsig失败[" + code + "]: " + result?.["msg"]);
             }
         }
-        return _0x10a914;
+        return Req;
     }
     async ["getfp"](_0x57e7b6 = false) {
         if (!this.valid_fp) {
@@ -276,10 +272,10 @@ class UserClass extends _0x3c8f2b {
         return this.fp;
     }
     async ["get_app_riskForm"](_0x4ad001 = false) {
-        let _0x534eca = await this.getfp(_0x4ad001);
+        let fp = await this.getfp(_0x4ad001);
         const _0x5ed7f8 = {
             "ip": "",
-            "fingerprint": _0x534eca,
+            "fingerprint": fp,
             "cityId": "30",
             "platform": 5,
             "app": 0,
@@ -289,7 +285,7 @@ class UserClass extends _0x3c8f2b {
         return _0x5ed7f8;
     }
     async ["get_riskForm"](_0xae24b7 = false) {
-        let _0x2af7b4 = await this.getfp(_0xae24b7);
+        let fp = await this.getfp(_0xae24b7);
         const _0x50b393 = {
             "openid": this.openid,
             "appid": _0x5bbfab,
@@ -304,8 +300,8 @@ class UserClass extends _0x3c8f2b {
             "partner": 0,
             "wxRiskLevel": JSON.stringify(_0x50b393),
             "platform": 13,
-            "appletsFingerprint": _0x2af7b4,
-            "wechatFingerprint": _0x2af7b4
+            "appletsFingerprint": fp,
+            "wechatFingerprint": fp
         };
         return _0x373d64;
     }
@@ -889,7 +885,7 @@ class UserClass extends _0x3c8f2b {
         try {
             let _0x47d8d2 = _0x5920b3?.["need_sign"],
                 url = "https://cube.meituan.com/topcube/api/toc/task/startUserTask",
-                _0x351047 = {
+                data = {
                     "uuid": this.uuid,
                     "userId": this.userId,
                     "cityId": 30,
@@ -905,10 +901,10 @@ class UserClass extends _0x3c8f2b {
                 "fn": "startUserTask",
                 "method": "post",
                 "url": url,
-                "json": _0x351047
+                "json": data
             };
             if (_0x47d8d2) {
-                let {headers} = await this.get_mtgsig(url, _0x351047);
+                let {headers} = await this.get_mtgsig(url, data);
                 _0x2b64f2.headers = {
                     "mtgsig": headers.mtgsig
                 };
