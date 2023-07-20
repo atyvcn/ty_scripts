@@ -223,7 +223,7 @@ class UserClass extends _0xef6898 {
         "clientversion": _0x3b2ebc,
         "utm_medium": _0x4b1eb0,
         "openIdCipher": _0xf7a395,
-        "cookie": "token=" + this.token + "; openid=" + this.openid + ";"
+        "cookie": "openid=" + this.openid + "; "+ck.trim()
       }
     });
   }
