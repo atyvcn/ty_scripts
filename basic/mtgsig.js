@@ -2755,8 +2755,7 @@ function d8(fQ, fR) {
                 f: fV
             }
         }
-        throw new TypeError('Invalid attempt to iterate non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.')
+        throw new TypeError('Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.')
     }
     var fY, fW = !0, fX = !1;
     return {

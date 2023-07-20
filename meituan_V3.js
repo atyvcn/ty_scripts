@@ -1,7 +1,7 @@
 /*
 美团 v3.07
 
-美团V3仅支持青龙等no_0x5bbc92dejs环境, 不支持圈X
+美团V3仅支持青龙等nodejs环境, 不支持圈X
 自动领券和完成一些活动任务
 
 APP每日赚钱: 默认会每日自动随机, 要关闭随机提现的话设置变量 MT_AutoWithdraw 为 false
@@ -14,20 +14,19 @@ export MT_CK="token=AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 cron: 2 0,7,11,17,21 * * *
 */
 const Env = require('./basic/Env.js');
-
 const { TYQLDG_API, base64_encode } = require('./basic/tyqldg');
-
 const $ = new Env("美团");
 const  got = require("got");
 const envPrefix = "MT_",
   envSplitor = ["\n", "&"],
   ckNames = [envPrefix + "CK"];
 let eid = 0,
-env_name=ckNames[0],
-mtgsig = null,
+env_name=ckNames[0];
+MTS = null,
 mtgsig_url = null;
+MTS = require('./basic/mtgsig.js');
 try {
-  mtgsig = require('./basic/mtgsig.js');
+  1//MTS = require('./basic/mtgsig.js');
 } catch {
   mtgsig_url = process.env[envPrefix + "Sign"] || "https://service.leafxxx.win/meituan";
 }
@@ -253,13 +252,13 @@ class UserClass extends _0xef6898 {
         "mtgsig": JSON.stringify(_0xdbd457)
       }
     };
-    if (mtgsig) {
-      Req=mtgsig.callMtgsig({
+    if (MTS) {
+      Req=MTS.callMtgsig({
         "url": url,
         "method": "POST",
         "headers": this.got.defaults.options.headers,
         'data': data
-    })
+      })
 
     } else {
       if (mtgsig_url) {
@@ -284,8 +283,8 @@ class UserClass extends _0xef6898 {
   }
   async ["getfp"](_0x2ec54d = false) {
     if (!this.valid_fp) {
-      if (mtgsig && _0x2ec54d) {
-        this.fp = mtgsig.mtFingerprint();
+      if (MTS && _0x2ec54d) {
+        this.fp = MTS.mtFingerprint();
         this.valid_fp = true;
       } else {
         if (mtgsig_url && _0x2ec54d) {
