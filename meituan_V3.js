@@ -28,7 +28,7 @@ try {
   MTS = require('./basic/mtgsig.js');
 } catch (e) {
   console.log(`本地mtgsig需要安装依赖 xhr2 青龙->依赖管理->NodeJs->新建依赖->名称：xhr2\nNodeJs 原始安装方法：npm i xhr2`);
-  console.log(e);
+  console.error(error);
 }
 const MT_AutoWithdraw = process.env[envPrefix + "AutoWithdraw"] || "true",
   DEFAULT_TIMEOUT = 8000,
