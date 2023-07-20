@@ -23,12 +23,12 @@ const envPrefix = "MT_",
 let eid = 0,
 env_name=ckNames[0];
 MTS = null,
-mtgsig_url = null;
-MTS = require('./basic/mtgsig.js');
+mtgsig_url = process.env[envPrefix + "Sign"] || "https://service.leafxxx.win/meituan";
 try {
-  1//MTS = require('./basic/mtgsig.js');
-} catch {
-  mtgsig_url = process.env[envPrefix + "Sign"] || "https://service.leafxxx.win/meituan";
+  MTS = require('./basic/mtgsig.js');
+} catch (e) {
+  console.log(`本地mtgsig需要安装依赖 xhr2 青龙->依赖管理->NodeJs->新建依赖->名称：xhr2\nNodeJs 原始安装方法：npm i xhr2`);
+  console.log(e);
 }
 const MT_AutoWithdraw = process.env[envPrefix + "AutoWithdraw"] || "true",
   DEFAULT_TIMEOUT = 8000,
