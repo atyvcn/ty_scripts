@@ -11,8 +11,8 @@ APP每日赚钱: 默认会每日自动随机, 要关闭随机提现的话设置�
 不想运行每日赚钱的, 设置变量 MT_MrzqTask 为 false: export MT_MrzqTask="false"
 不想运行抽月符的, 设置变量 MT_CyfTask 为 false: export MT_CyfTask="false"
 
-自行捉包把meituan.com里面的token(一般在请求头里)填到变量 MT_Cookie 中, 多账号换行或&或@隔开
-export MT_Cookie="AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx#UUID(如需运行小团币)"
+自行捉包把meituan.com里面的token(一般在请求头里)填到变量 MT_CK 中, 多账号换行或&或@隔开
+export MT_CK="token=AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;UUID=xxxx(如需运行小团币)"
 
 cron: 2 0,10,15,17,21 * * *
 */
@@ -22,7 +22,7 @@ const $ = new Env("美团");
 const got = require("got");
 const envPrefix = "MT_",
   envSplitor = ["\n", "&", "@"],
-  ckNames = [envPrefix + "Cookie"];
+  ckNames = [envPrefix + "CK"];
 let eid = 0,
 env_name=ckNames[0],
 MTS = null;
