@@ -12,7 +12,7 @@ export MT_CK="token=AgGZIgsYHyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;"
 cron: 2 0,10,15,17,21 * * *
 */
 
-const Env = require('./basic/$.js');
+const Env = require('./basic/Env.js');
 const { TYQLDG_API, base64_encode } = require('./basic/tyqldg');
 const $ = new Env("美团");
 const got = require("got");
